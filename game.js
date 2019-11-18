@@ -42,6 +42,7 @@ class Positionable extends Observable {
 
 class Tile extends Positionable {
     constructor (x, y, type) {
+        this.types = [ 'Grass', 'Obstacle', 'Player', 'Escape' ];
         super(x,y);
         this._type = type;
     }
@@ -58,7 +59,12 @@ class Board {
         let lineOfTiles = Math.floor(Math.sqrt(maxTiles));
         for ( let y = 0; y < lineOfTiles; ++y ) {
             for ( let x = 0; x < lineOfTiles; ++x ) {
-                this.tiles.push(new Tile(x,y,0))
+                if ( Math.random() < 0.8 ) {
+                    this.tiles.push(new Tile(x,y,0))
+                }
+                else {
+                    this.tiles.push(new Tile(x,y,1))
+                }
             }
         }
     }
