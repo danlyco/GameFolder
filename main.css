@@ -1,0 +1,95 @@
+td {
+    height: 0px;
+    width: 0px;
+    display: block;
+    padding: 0px;
+    position: absolute;
+}
+
+
+table {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    border-spacing: 0px;
+    transform: rotateX(60deg) rotateZ(45deg) scale(5);
+    -webkit-transform: rotateX(60deg) rotateZ(45deg) scale(5);
+    -moz-transform: rotateX(60deg) rotateZ(45deg) scale(5);
+    -ms-transform: rotateX(60deg) rotateZ(45deg) scale(5);
+    -o-transform: rotateX(60deg) rotateZ(45deg) scale(5);
+}
+
+
+/* Tiles */
+
+
+/* Blocks */
+.block {
+    width: 54px;
+    height: 59px;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+    background: url(./assets/blocks/grass.png) 0 0 no-repeat;
+    -webkit-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
+    -moz-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
+    -ms-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
+    -o-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
+}
+
+.block--empty {}
+
+.block--obstacle {
+    transform: translate3d(15px, -17px, 0px);
+    width: 100%;
+    height: 100%;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+    background: url(../assets/blocks/barrel.png) 0px 0px no-repeat;
+    -webkit-transform: translate3d(15px, -17px, 0px);
+    -moz-transform: translate3d(15px, -17px, 0px);
+    -ms-transform: translate3d(15px, -17px, 0px);
+    -o-transform: translate3d(15px, -17px, 0px);
+}
+
+.block--player {
+    transform: translate3d(15px, -45px, 0px);
+    width: 1.7em;
+    height: 100%;
+    background: url(./assets/chars/billy.png) 0 0 no-repeat;
+    animation: billy-bottom-gif steps(4) 0.5s forwards;
+    -webkit-animation: billy-bottom-gif steps(4) 0.5s forwards;
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+    -webkit-transform: translate3d(15px, -45px, 0px);
+    -moz-transform: translate3d(15px, -45px, 0px);
+    -ms-transform: translate3d(15px, -45px, 0px);
+    -o-transform: translate3d(15px, -45px, 0px);
+}
+
+.block--player__1 {}
+
+.block--player__2 {}
+
+/* Items */
+.item {}
+
+.item--machette {}
+
+.item--hachoir {}
+
+.item--piege {}
+
+.item--grappin {}
+
+.item--bandages {}
+
+.item--lance-pierre {}
+
+.item--skate {}
