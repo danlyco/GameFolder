@@ -1,15 +1,26 @@
+body, html {
+    overflow: hidden;
+    background: url(./assets/img/bg.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
 td {
-    height: 0px;
-    width: 0px;
-    display: block;
+    height: 13px;
+    width: 13px;
     padding: 0px;
     position: absolute;
+    visibility: hidden;
+
 }
 
 
 table {
+    z-index: 2;
     position: absolute;
-    top: 35%;
+    top: 32.9%;
     left: 50%;
     border-spacing: 0px;
     transform: rotateX(60deg) rotateZ(45deg) scale(5);
@@ -19,27 +30,55 @@ table {
     -o-transform: rotateX(60deg) rotateZ(45deg) scale(5);
 }
 
-
+.overlay {
+    display: block;
+    z-index: 1;
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    background-color: rgb(31, 33, 58);
+    opacity: 0.6;
+}
 /* Tiles */
+.cover {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+}
 
-
+.cover:hover {
+    cursor: pointer;
+}
 /* Blocks */
 .block {
-    width: 54px;
+    visibility: visible;
+    /*border:solid 3px red;
+    */width: 54px;
     height: 59px;
+    filter: grayscale(60%);
     -ms-interpolation-mode: nearest-neighbor;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: -moz-crisp-edges;
-    transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
     image-rendering: -o-pixelated;
     image-rendering: pixelated;
     background: url(./assets/blocks/grass.png) 0 0 no-repeat;
-    -webkit-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
-    -moz-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
-    -ms-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
-    -o-transform: rotateZ(-45deg) rotateY(-60deg) translate3d(-1.1em, -4.8em, 0em);
+    -webkit-transform:  rotateZ(-45deg) rotateY(-60deg) translate3d(-0.1em, -.9em, -.2em);
+    -webkit-filter: grayscale(60%);
 }
 
+.block:hover  {
+    filter: grayscale(20%);
+    -webkit-filter: grayscale(20%);
+}
+.block div {
+    clip-path: none;
+}
+
+.block--possibleMove {
+    filter: grayscale(20%) saturate(1.5);
+    -webkit-filter: grayscale(20%) saturate(1.5);
+}
 .block--empty {}
 
 .block--obstacle {
@@ -51,11 +90,31 @@ table {
     image-rendering: -moz-crisp-edges;
     image-rendering: -o-pixelated;
     image-rendering: pixelated;
-    background: url(../assets/blocks/barrel.png) 0px 0px no-repeat;
     -webkit-transform: translate3d(15px, -17px, 0px);
     -moz-transform: translate3d(15px, -17px, 0px);
     -ms-transform: translate3d(15px, -17px, 0px);
     -o-transform: translate3d(15px, -17px, 0px);
+}
+
+.block--obstacle__barrel {
+    width: 47%;
+    height: 61%;
+    background: url(../assets/blocks/barrel.png) 0px 0px no-repeat;
+}
+.block--obstacle__barbedwire {
+    width: 55%;
+    height: 55%;
+    background: url(../assets/blocks/barbed.png) 0px 0px no-repeat;
+}
+.block--obstacle__woodbox {
+    width: 55%;
+    height: 61%;
+    background: url(../assets/blocks/woodbox.png) 0px 0px no-repeat;
+}
+
+
+.block--obstacle-2 {
+    
 }
 
 .block--player {
@@ -71,25 +130,227 @@ table {
     -moz-transform: translate3d(15px, -45px, 0px);
     -ms-transform: translate3d(15px, -45px, 0px);
     -o-transform: translate3d(15px, -45px, 0px);
+    -webkit-animation: billy-bottom-gif steps(4) .4s forwards;
+    animation-play-state: paused;
+
 }
 
-.block--player__1 {}
+.block--player__adam {
+    transform: translate3d(11px, -30px, 0px);
+    background: url(./assets/chars/adam.png) 0 0 no-repeat;
+    -webkit-transform: translate3d(11px, -30px, 0px);
+    -moz-transform: translate3d(11px, -30px, 0px);
+    -ms-transform: translate3d(11px, -30px, 0px);
+    -o-transform: translate3d(11px, -30px, 0px);
+}
 
-.block--player__2 {}
+.block--player__2 {
+    background: url(./assets/chars/billy.png) 0 0 no-repeat;
+}
 
 /* Items */
-.item {}
+.item {
+    transform: translate3d(15px, -17px, 0px);
+    width: 44%;
+    height: 49%;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+    -webkit-transform: translate3d(15px, -17px, 0px);
+    -moz-transform: translate3d(15px, -17px, 0px);
+    -ms-transform: translate3d(15px, -17px, 0px);
+    -o-transform: translate3d(15px, -17px, 0px);
+}
 
-.item--machette {}
+/* Tooltip text */
+.item .tooltiptext {
+    font-size: .3em;
+    font-family: sans-serif;
+    visibility: hidden;
+    width: 60px;
+    background-color: rgba(0, 0, 0, 0.89);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /*Positionthetooltiptext*/position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translate(-50%);
+    /*Fadeintooltip*/opacity: 0;
+    transition: opacity 0.3s;
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+}
 
-.item--hachoir {}
+.item .tooltiptext h1 {
+    font-size: .4em;
+    margin-bottom: 0;
+}
 
-.item--piege {}
+.item .tooltiptext p {
+    margin-top: 0;
+    font-size: .1em;
+}
+  /* Tooltip arrow */
+  .item .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.89) transparent transparent transparent;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .item:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 
-.item--grappin {}
+  }
 
-.item--bandages {}
+.item--machette {
+    background: url(../assets/items/machette.png) 0px 0px no-repeat;
+}
 
-.item--lance-pierre {}
+.item--hachoir {
+    background: url(../assets/items/hachoir.png) 0px 0px no-repeat;
+}
 
-.item--skate {}
+.item--piege {
+    background: url(../assets/items/piege.png) 0px 0px no-repeat;
+}
+
+.item--grappin {
+    background: url(../assets/items/grappin.png) 0px 0px no-repeat;
+}
+
+.item--bandages {
+    background: url(../assets/items/bandages.png) 0px 0px no-repeat;
+}
+
+.item--lance-pierre {
+    background: url(../assets/items/lance-pierre.png) 0px 0px no-repeat;
+}
+
+.item--skate {
+    background: url(../assets/items/skate.png) 0px 0px no-repeat;
+}
+
+
+/* INTERFACE */
+
+.interface {
+    image-rendering: pixelated;
+    pointer-events: none;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    display: flex;
+}
+.interface--element {
+    position: absolute;
+    display:block;
+    bottom: 20%;
+}
+.interface--player {
+    position: relative;
+    width: 50%;
+    height: 100%;
+}
+
+.interface--equipedItem {
+    width: 100px;
+    height: 100px;
+    background-size: 100% auto;
+    background-position: center center;
+    border: solid 3px rgb(156, 0, 0);
+    background-color: rgba(0, 0, 0, 0.281);
+}
+/* player 1  */
+.interface--player__1__equipedItem {
+    left: 20%;
+
+}
+
+/* player 2 */
+.interface--player__2__equipedItem {
+    left: 20%;
+}
+.interface--player__2 {
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+}
+.interface--healthbar {
+    font-weight: bold;
+    line-height: 30px;
+    width: 300px;
+    height: 30px;
+    left: 25%;
+    bottom: 10%;
+    background-color: rgb(114, 0, 0);
+    border: solid 2px rgb(88, 0, 0);
+}
+
+.interface--healthbar__overlay {
+    height: 100%;
+    width: 60%;
+    background: linear-gradient(to right, rgb(255, 183, 102),red);
+
+}
+
+.interface--player__char__survivor {
+    background: url(./assets/chars/adam.png);
+    width: 3%;
+    height: 5.1%;
+    left: 5%;
+    bottom: 20%;
+    transform: scale(16);
+    -webkit-transform: scale(16);
+    -moz-transform: scale(16);
+    -ms-transform: scale(16);
+    -o-transform: scale(16);
+    -webkit-animation: billy-bottom-gif steps(2) .4s infinite;
+
+}
+
+.interface--player__char__chaser {
+    position: absolute;
+    background: url(./assets/chars/billy.png);
+    width: 3%;
+    height: 5.6%;
+    left: 3%;
+    bottom: 30%;
+    image-rendering: pixelated;
+    transform: scale(16);
+    -webkit-transform: scale(16);
+    -moz-transform: scale(16);
+    -ms-transform: scale(16);
+    -o-transform: scale(16);
+    /* -webkit-animation: billy-bottom-gif steps(4) .5s infinite; */
+    /* -webkit-animation: billy-bottom-gif steps(2) .4s infinite; */
+
+}
+
+@keyframes billy-bottom-gif {
+    0% {
+      background-position: 0%;
+    }
+  
+    100% {
+      background-position: 95%;
+    }
+  }
