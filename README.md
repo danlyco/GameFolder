@@ -1,5 +1,6 @@
 # Thrill : Adam's escape
-![Image of presentation for the game](https://lospec.com/pixel-art-uploader/EB6wsuH.gif "Presentation")
+![Image of presentation for the game](./readme-pres.gif "Presentation")
+# 
 Turn based game.
 2P only.
 
