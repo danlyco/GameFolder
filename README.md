@@ -19,7 +19,7 @@ A JSDOC is available.
 
 ## Built With
 
-* [Jquery](https://api.jquery.com) - The web framework used
+* [Jquery](https://api.jquery.com) - The library used
 
 ## Authors
 
