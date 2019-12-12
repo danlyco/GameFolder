@@ -59,6 +59,7 @@ table {
   }
 }
 .overlay {
+  pointer-events: none;
     display: block;
     z-index: 1;
     width: 100%;
@@ -164,6 +165,10 @@ table {
 
 }
 
+.block--player .item {
+  display: none;
+}
+
 .block--player__adam {
     transform: translate3d(11px, -30px, 0px);
     background: url(./assets/chars/adam.png) 0 0 no-repeat;
@@ -208,7 +213,7 @@ table {
     visibility: hidden;
     width: 60px;
     background-color: rgba(0, 0, 0, 0.89);
-    color: #fff;
+    color: #000;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
@@ -822,4 +827,47 @@ table {
 }
 .intro--characterSelection__startButton:hover:before {
   content: '> ';
+}
+
+/* Winning screen */
+.interface--winner {
+  text-align: center;
+  width: 30%;
+  height: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  color:white;
+  text-shadow: 3px 0 0 #000, -3px 0 0 #000, 0 3px 0 #000, 0 -3px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform:translate(-50%);
+  -webkit-transform:translate(-50%);
+  -moz-transform:translate(-50%);
+  -ms-transform:translate(-50%);
+  -o-transform:translate(-50%);
+  justify-content: space-between;
+  flex-direction: column;
+  z-index: 1000!importnat;
+}
+
+.interface--winner__text {
+  color:yellow;
+  flex-basis: 1;
+}
+
+.interface--winner button:hover:after {
+  content: ' <';
+}
+
+.interface--winner button:hover:before {
+  content: '> ';
+}
+
+button {
+  background: inherit;
+  color: inherit;
+  font: inherit;
+  outline: inherit;
+  border: inherit;
 }

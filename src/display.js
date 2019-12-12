@@ -22,10 +22,7 @@ class DisplayManager {
   constructor() {
     this.state = 'intro';
     // eslint-disable-next-line no-restricted-syntax
-    for (const player of Game.players) {
-      player.char.onChange(() => DisplayManager.refresh());
-    }
-    Game.onChange(() => DisplayManager.refresh());
+
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -96,12 +93,13 @@ class DisplayManager {
     const $char = $background.split('/').pop().replace("cleanup", '').split('.png')[0];
     $(`.intro--characterSelection__player:eq(${char}) > .intro--characterSelection__charPreview`).css('background-image', 'none');
     $(`.intro--characterSelection__player:eq(${char}) > .intro--characterSelection__charPreview`).css('background-image', $background);
-    if (Game.playerModel.length >= 1) {
-      const $intro = $('.intro');
-      $('.intro--characterSelection__startButton').remove();
-      $('<button>').text('START').addClass('intro--characterSelection__startButton').appendTo($intro);
-    }
     return $char;
+  }
+
+  startButton() {
+    const $intro = $('.intro');
+    $('.intro--characterSelection__startButton').remove();
+    $('<button>').text('START').addClass('intro--characterSelection__startButton').appendTo($intro);
   }
 
   /**
@@ -129,7 +127,20 @@ class DisplayManager {
     });
   }
 
-  // winning() {}
+  /**
+   * Display winner screen
+   * @param {Int} player select winner
+   */
+  winning() {
+    if (!Game.winner) return;
+    const $interface = $('.interface');
+    $interface.empty();
+    $interface.css('pointer-events', 'all');
+    const $winningWrapper = $('<div></div>').addClass('interface--winner').appendTo($interface);
+    $('<h1></h1>').text(`PLAYER ${Game.winner} WINS`).addClass('interface--winner__text').appendTo($winningWrapper);
+    $('<button></button>').text('NEW GAME').addClass('interface--winner__newgame').appendTo($winningWrapper);
+    $('<button></button>').text('SHARE YOUR VICTORY').addClass('interface--winner__link').appendTo($winningWrapper);
+  }
 
   /**
    * Init the board with all games value
@@ -286,7 +297,7 @@ class DisplayManager {
   }
 
   /** Refresh visual elements of board */
-  static refresh() {
+  refresh() {
     Display.remove();
     Display.init();
   }

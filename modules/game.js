@@ -260,7 +260,7 @@ class Board {
       for (let x = 0; x < this.lineOfTiles; ++x) {
         const randomTileGenerator = Math.random();
 
-        if (randomTileGenerator < 0.8) {
+        if (randomTileGenerator < 0.9) {
           this.tiles.push(new EmptyTile(x, y));
         } else {
           const randomObstacleGenerator = Math.random();
@@ -606,6 +606,7 @@ class GameManager extends Observable {
    * Used in character selection
    * @param {String} mode can either be Survival or Versus
    */
+  // eslint-disable-next-line class-methods-use-this
 
 
   getCharModels(mode) {
@@ -638,7 +639,8 @@ class GameManager extends Observable {
 
       this.board.tiles[randomTile]._hasItem = [0];
       elem.char.setTile(this.board.tiles[randomTile].getPos()[0], this.board.tiles[randomTile].getPos()[1]);
-      this.board.tiles[randomTile].reachable = 0; // Player can't spawn near another player (One tile from)
+      this.board.tiles[randomTile]._reachable = 0;
+      this.board.tiles[randomTile].hasPlayer = 1; // Player can't spawn near another player (One tile from)
 
       if (this.board.isPlayerNear(this.players[0].char.getTile())) {
         return this.playerSpawn();
@@ -741,8 +743,8 @@ class GameManager extends Observable {
       for (let i = 1; i <= this.players[this.activePlayer].char.movementPoint; i++) {
         // eslint-disable-next-line no-continue
         if (elem[i - 1] instanceof Obstacle || elem[i - 2] instanceof Obstacle) continue;
-        if (elem[i - 1] instanceof EmptyTile && elem[i - 1]._hasPlayer === 1 || // eslint-disable-next-line no-continue
-        elem[i - 2] instanceof EmptyTile && elem[i - 2]._hasPlayer === 1) continue;
+        if (elem[i - 1] instanceof EmptyTile && elem[i - 1].hasPlayer === 1 || // eslint-disable-next-line no-continue
+        elem[i - 2] instanceof EmptyTile && elem[i - 2].hasPlayer === 1) continue;
 
         switch (elem) {
           case this.possibleBottomMovesTiles:
@@ -770,7 +772,9 @@ class GameManager extends Observable {
     this.possibleMovesTiles = [...this.possibleBottomMovesTiles, ...this.possibleLeftMovesTiles, ...this.possibleRightMovesTiles, ...this.possibleTopMovesTiles]; // eslint-disable-next-line no-restricted-syntax
 
     for (const tile of this.possibleMovesTiles) {
-      if (tile instanceof EmptyTile && tile._hasPlayer !== 1) tile.reachable = 1;
+      if (tile instanceof EmptyTile && tile.hasPlayer !== 1) {
+        tile.reachable = 1;
+      }
     }
   }
   /** Reset possible moves */
@@ -853,6 +857,7 @@ class VersusGameManager extends GameManager {
     }
 
     this.items = [new Item('Machette', 0, 35, 2), new Item('Hachoir', 0, 25, 2), new Item('Grappin', 0, 30, 2), new Item('Gants', 0, 20, 2)];
+    this.winner = 0;
     this.mode = 'versus';
   }
   /**
@@ -916,6 +921,12 @@ class VersusGameManager extends GameManager {
 
     if (this.players[this.playersAction[1].player].char._health === 0 && this.players[this.playersAction[0].player].char._health === 0) {
       this.players[this.playersAction[0].player].char._health = previousHealthFirstPlayer;
+    }
+
+    if (this.players[this.playersAction[1].player].char._health === 0) {
+      this.winner = this.playersAction[0].player + 1;
+    } else if (this.players[this.playersAction[0].player].char._health === 0) {
+      this.winner = this.playersAction[1].player + 1;
     } // Removing actions each turn after they've been used
 
 

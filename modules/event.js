@@ -5,26 +5,38 @@ class EventManager {
   constructor() {
     // Intro
     // Display the game mode selection screen using Display module
-    $(document).on('click', '.intro--newgame', function () {
+    $(document).on('click', '.intro--newgame', () => {
       Display.gameModeSelection();
     }); // Display the character selection screen using Display module
 
-    $(document).on('click', '.intro--gameMode__box:eq(1)', function () {
+    $(document).on('click', '.intro--gameMode__box:eq(1)', () => {
       Display.characterSelection('versus');
     }); // Select character using Display and Game module
 
-    [0, 1].forEach(function (elem) {
-      $(document).on('click', `.intro--characterSelection__player:eq(${elem})`, function (clickedElement) {
+    [0, 1].forEach(elem => {
+      $(document).on('click', `.intro--characterSelection__player:eq(${elem})`, clickedElement => {
         if (event.target.classList.contains('intro--characterSelection__char')) {
           Game.playerModel[elem] = Display.characterSelector(elem, clickedElement);
+          console.info(Game.playerModel);
+
+          if (Game.playerModel[0] !== undefined && Game.playerModel.length > 1) {
+            Display.startButton();
+          }
         }
       });
     }); // Display and init the game
 
-    $(document).on('click', '.intro--characterSelection__startButton', function () {
-      Display.init();
+    $(document).on('click', '.intro--characterSelection__startButton', () => {
       Game.itemSpawn();
       Game.playerSpawn();
+      Display.init();
+
+      for (const player of Game.players) {
+        player.char.onChange(() => Display.refresh());
+      }
+
+      Game.onChange(() => Display.refresh());
+      Game.onChange(() => Display.winning(this));
     }); // eslint-disable-next-line func-names
 
     $(document).on('click', 'td', function () {
@@ -42,7 +54,6 @@ class EventManager {
     $(document).on('click', '#action2', () => {
       switch (Game.players[0].char.onFight) {
         case 0:
-          console.info('test');
           Game.nextTurn();
           break;
 
@@ -77,6 +88,10 @@ class EventManager {
           // console.info(Game.players[0].char._onFight);
           break;
       }
+    }); // Display the character selection screen using Display module
+
+    $(document).on('click', '.interface--winner__newgame', () => {
+      location.reload();
     });
   }
 
